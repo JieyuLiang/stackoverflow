@@ -12254,54 +12254,28 @@ div#notebook {
 <div class="prompt input_prompt">In&nbsp;[5]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># find columns contain StackOverflow</span>
-<span class="n">columns_contain_StackOverflow</span> <span class="o">=</span> <span class="p">[]</span>
-<span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">df2</span><span class="o">.</span><span class="n">Column</span><span class="p">:</span>
-    <span class="k">if</span> <span class="s1">&#39;StackOverflow&#39;</span> <span class="ow">in</span> <span class="n">col</span><span class="p">:</span>
-        <span class="n">columns_contain_StackOverflow</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">col</span><span class="p">)</span>
-        
-<span class="n">columns_contain_StackOverflow</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Define a function to find the column we are interested in.</span>
+<span class="k">def</span> <span class="nf">find_related_columns</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">look_for</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    INPUT:</span>
+<span class="sd">    df - the pandas dataframe you want to search</span>
+<span class="sd">    look_for - a string you want to search for in each column of df</span>
+<span class="sd">    </span>
+<span class="sd">    OUTPUT:</span>
+<span class="sd">    related_columns - a list of columns containing the string you want to find</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="n">related_columns</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">df</span><span class="o">.</span><span class="n">Column</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">look_for</span> <span class="ow">in</span> <span class="n">col</span><span class="p">:</span>
+            <span class="n">related_columns</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">col</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">related_columns</span>
+
+
+<span class="c1"># find columns contain StackOverflow</span>
+<span class="n">columns_contain_StackOverflow</span> <span class="o">=</span> <span class="n">find_related_columns</span><span class="p">(</span><span class="n">df2</span><span class="p">,</span> <span class="s1">&#39;StackOverflow&#39;</span><span class="p">)</span>
 </pre></div>
 
 </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-
-<div class="prompt output_prompt">Out[5]:</div>
-
-
-
-
-<div class="output_text output_subarea output_execute_result">
-<pre>[&#39;StackOverflowDescribes&#39;,
- &#39;StackOverflowSatisfaction&#39;,
- &#39;StackOverflowDevices&#39;,
- &#39;StackOverflowFoundAnswer&#39;,
- &#39;StackOverflowCopiedCode&#39;,
- &#39;StackOverflowJobListing&#39;,
- &#39;StackOverflowCompanyPage&#39;,
- &#39;StackOverflowJobSearch&#39;,
- &#39;StackOverflowNewQuestion&#39;,
- &#39;StackOverflowAnswer&#39;,
- &#39;StackOverflowMetaChat&#39;,
- &#39;StackOverflowAdsRelevant&#39;,
- &#39;StackOverflowAdsDistracting&#39;,
- &#39;StackOverflowModeration&#39;,
- &#39;StackOverflowCommunity&#39;,
- &#39;StackOverflowHelpful&#39;,
- &#39;StackOverflowBetter&#39;,
- &#39;StackOverflowWhatDo&#39;,
- &#39;StackOverflowMakeMoney&#39;]</pre>
-</div>
-
-</div>
-
 </div>
 </div>
 
@@ -12327,6 +12301,7 @@ div#notebook {
                                   <span class="s1">&#39;StackOverflowNewQuestion&#39;</span><span class="p">,</span> <span class="s1">&#39;StackOverflowAnswer&#39;</span><span class="p">,</span> 
                                   <span class="s1">&#39;StackOverflowMetaChat&#39;</span><span class="p">]</span>
 
+<span class="c1"># Look at the questions for these columns in the survey.</span>
 <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">columns_contain_StackOverflow2</span><span class="p">:</span>
     <span class="nb">print</span><span class="p">(</span><span class="n">col</span><span class="p">)</span>
     <span class="nb">print</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">df2</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">df2</span><span class="p">[</span><span class="s1">&#39;Column&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="n">col</span><span class="p">][</span><span class="s1">&#39;Question&#39;</span><span class="p">]))</span>
@@ -12503,7 +12478,7 @@ StackOverflowMetaChat
 
 
 <div class="output_text output_subarea output_execute_result">
-<pre>&lt;matplotlib.axes._subplots.AxesSubplot at 0x1a1158bc88&gt;</pre>
+<pre>&lt;matplotlib.axes._subplots.AxesSubplot at 0x1a1d145c50&gt;</pre>
 </div>
 
 </div>
@@ -12616,7 +12591,7 @@ height=634
 <ol>
 <li>Replace the missing value with 0.</li>
 </ol>
-<p>There are two reasons for choosing this method. First, the respondent did not answer the question most likely because he did not use StackOverflow. Second, I don't want to overestimate the activeness of the respondents.</p>
+<h4 id="There-are-two-reasons-for-choosing-this-method.">There are two reasons for choosing this method.<a class="anchor-link" href="#There-are-two-reasons-for-choosing-this-method.">&#182;</a></h4><p>First, the respondent did not answer the question most likely because he did not use StackOverflow. Second, I don't want to overestimate the activeness of the respondents.</p>
 
 </div>
 </div>
@@ -12766,7 +12741,8 @@ height=634
 <div class="prompt input_prompt">In&nbsp;[11]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">[</span><span class="mi">15</span><span class="p">,</span><span class="mi">3</span><span class="p">])</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Draw three histograms of the three types of behavioral activity .</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">[</span><span class="mi">15</span><span class="p">,</span><span class="mi">3</span><span class="p">])</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">131</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">activity_df</span><span class="p">[</span><span class="n">columns_activity</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">2</span><span class="p">]],</span> <span class="n">bins</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span><span class="nb">range</span><span class="o">=</span><span class="p">[</span><span class="o">-</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">4.5</span><span class="p">])</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span><span class="mi">51392</span><span class="p">])</span>
@@ -12833,7 +12809,8 @@ height=222
 <div class="prompt input_prompt">In&nbsp;[12]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">activity_df</span><span class="p">[</span><span class="s1">&#39;Salary&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df1</span><span class="p">[</span><span class="s1">&#39;Salary&#39;</span><span class="p">]</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Adding the Salary column in df1 to activity_df</span>
+<span class="n">activity_df</span><span class="p">[</span><span class="s1">&#39;Salary&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df1</span><span class="p">[</span><span class="s1">&#39;Salary&#39;</span><span class="p">]</span>
 <span class="n">activity_df</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
 
@@ -12958,7 +12935,8 @@ height=222
 <div class="prompt input_prompt">In&nbsp;[13]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">activity_df</span><span class="p">[</span><span class="s1">&#39;Salary&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">hist</span><span class="p">()</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Draw a histogram of the salary.</span>
+<span class="n">activity_df</span><span class="p">[</span><span class="s1">&#39;Salary&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">hist</span><span class="p">()</span>
 </pre></div>
 
 </div>
@@ -12977,7 +12955,7 @@ height=222
 
 
 <div class="output_text output_subarea output_execute_result">
-<pre>&lt;matplotlib.axes._subplots.AxesSubplot at 0x1a150e8940&gt;</pre>
+<pre>&lt;matplotlib.axes._subplots.AxesSubplot at 0x1a20ca56d8&gt;</pre>
 </div>
 
 </div>
@@ -13025,7 +13003,8 @@ height=250
 <div class="prompt input_prompt">In&nbsp;[14]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">activity_df</span><span class="p">[</span><span class="s1">&#39;Salary&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">isnull</span><span class="p">()</span><span class="o">.</span><span class="n">mean</span><span class="p">())</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># View the proportion of missing values and the number of rows without missing data in the column of Salary</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">activity_df</span><span class="p">[</span><span class="s1">&#39;Salary&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">isnull</span><span class="p">()</span><span class="o">.</span><span class="n">mean</span><span class="p">())</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">activity_df</span><span class="p">[</span><span class="s1">&#39;Salary&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">notnull</span><span class="p">()</span><span class="o">.</span><span class="n">sum</span><span class="p">())</span>
 </pre></div>
 
@@ -13067,7 +13046,8 @@ height=250
 <div class="prompt input_prompt">In&nbsp;[15]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">activity_dropna</span> <span class="o">=</span> <span class="n">activity_df</span><span class="o">.</span><span class="n">dropna</span><span class="p">()</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Delete rows with missing values in the Salary column.</span>
+<span class="n">activity_dropna</span> <span class="o">=</span> <span class="n">activity_df</span><span class="o">.</span><span class="n">dropna</span><span class="p">()</span>
 <span class="n">activity_dropna</span><span class="o">.</span><span class="n">describe</span><span class="p">()</span>
 </pre></div>
 
@@ -13255,7 +13235,7 @@ height=250
 
 
 <div class="output_text output_subarea output_execute_result">
-<pre>&lt;matplotlib.axes._subplots.AxesSubplot at 0x1a0cdd8b70&gt;</pre>
+<pre>&lt;matplotlib.axes._subplots.AxesSubplot at 0x1a19492438&gt;</pre>
 </div>
 
 </div>
@@ -13295,8 +13275,7 @@ height=387
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>My initial guess was that users who were more active on StackOverflow (such as contributing a lot of good answers) might have a higher code level. The salary of a high level of developers is usually higher. Therefore, the respondent's salary may have some relevance to its activity on StackOverflow.</p>
 <h3 id="findings">findings<a class="anchor-link" href="#findings">&#182;</a></h3><p>However, through the correlation analysis of the survey results, I found that my conjecture is not valid. The correlation coefficient between salary and activity is small (between -0.13 and 0.01).</p>
-<p>Originally I wanted to build a model that predicted the salary of the user by its activity on StackOverflow. But this idea is too idealistic and cannot be done.</p>
-<p>But the correlation within the three types of behavior is relatively high. For example, the correlation coefficient for proposing new questions and answering questions is 0.51, and the correlation coefficient with Meta is 0.31. Users who like to ask questions on StackOverflow are more likely to answer questions and participate in community discussions on meta or in chat.</p>
+<h4 id="Originally-I-wanted-to-build-a-model-that-predicted-the-salary-of-the-user-by-its-activity-on-StackOverflow.-But-this-idea-is-too-idealistic-and-cannot-be-done.">Originally I wanted to build a model that predicted the salary of the user by its activity on StackOverflow. But this idea is too idealistic and cannot be done.<a class="anchor-link" href="#Originally-I-wanted-to-build-a-model-that-predicted-the-salary-of-the-user-by-its-activity-on-StackOverflow.-But-this-idea-is-too-idealistic-and-cannot-be-done.">&#182;</a></h4><p>But the correlation within the three types of behavior is relatively high. For example, the correlation coefficient for proposing new questions and answering questions is 0.51, and the correlation coefficient with Meta is 0.31. Users who like to ask questions on StackOverflow are more likely to answer questions and participate in community discussions on meta or in chat.</p>
 <p>I proposed a new indicator, the active index, which is defined as the sum of the activity of the eight behaviors. The maximum value of the respondent's activity index is 32. Respondents with an activity index ranging from 3 to 6 accounted for the highest proportion.</p>
 
 </div>
@@ -13701,6 +13680,15 @@ height=385
 <li>The frequency of the third class users participating in content creation is very low. The second class of users are more active. The first class of users is the most active.</li>
 </ol>
 <p>According to the second point, it can be speculated that when a user's account creates a CV or developer story, he is more likely to find a job on Stack Overflow. This provides an idea for ad serving to show users some job ads that match their profile.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>The main findings of the code can be found at the post available <a href="https://medium.com/@l41498946/can-we-guess-that-developers-who-are-more-active-on-stackoverflow-earn-more-72d52fce94f6">here</a>.</p>
 
 </div>
 </div>
